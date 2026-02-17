@@ -120,20 +120,19 @@ export default function GameScreen({
         )}
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-2 sm:gap-3">
         <AnswerInput
           value={answer}
           onChange={setAnswer}
           onSubmit={handleSubmit}
           inputRef={inputRef}
           disabled={pct === 0 || feedback !== null}
-          className="text-2xl py-6 rounded-2xl border-2 border-gray-100 focus:border-sky-500 transition-all"
         />
         <Button
           onClick={() => handleSubmit()}
           variant="primary"
           disabled={pct === 0 || feedback !== null}
-          className={`px-8 rounded-2xl font-black text-lg ${isSuddenDeath ? 'bg-rose-600 shadow-rose-100 hover:bg-rose-700' : ''}`}
+          className={`px-4 sm:px-8 rounded-2xl font-black text-base sm:text-lg ${isSuddenDeath ? 'bg-rose-600 shadow-rose-100 hover:bg-rose-700' : ''}`}
         >
           OK
         </Button>
