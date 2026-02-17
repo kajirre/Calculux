@@ -36,8 +36,8 @@ export default function ShareCard({ score, rank, consecutiveHits }) {
         ctx.shadowColor = 'rgba(0,0,0,0.3)';
 
         // Title
-        ctx.font = 'black 80px Inter, system-ui, sans-serif';
-        ctx.fillText('CALCULUX', 540, 200);
+        ctx.font = 'black 120px Inter, system-ui, sans-serif';
+        ctx.fillText('CALCULUX', 540, 220);
 
         // Rank Label
         ctx.font = 'bold 40px Inter, system-ui, sans-serif';

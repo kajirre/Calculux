@@ -10,10 +10,12 @@ export default function ProblemDisplay({ a, b, op }) {
 
   return (
     <div className="text-center w-full overflow-hidden">
-      <div className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight break-words">
-        {a} <span className="text-sky-600 mx-1 sm:mx-2">{opMap[op] || op}</span> {b}
+      <div className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight break-words flex items-center justify-center flex-wrap gap-x-2">
+        <span>{a}</span>
+        <span className="text-sky-600">{opMap[op] || op}</span>
+        <span>{b}</span>
+        <span className="text-gray-300 tracking-tighter">= ?</span>
       </div>
-      <div className="text-3xl sm:text-4xl font-black text-gray-300 mt-2">= ?</div>
     </div>
   )
 }
