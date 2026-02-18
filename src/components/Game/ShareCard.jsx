@@ -10,23 +10,23 @@ export default function ShareCard({ score, rank, consecutiveHits }) {
 
         // Canvas dimensions
         canvas.width = 1080;
-        canvas.height = 1080;
+        canvas.height = 850;
 
         // Background Gradient
-        const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+        const grad = ctx.createLinearGradient(0, 0, 1080, 850);
         grad.addColorStop(0, '#0ea5e9'); // sky-500
         grad.addColorStop(1, '#6366f1'); // indigo-500
         ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillRect(0, 0, 1080, 850);
 
         // Decorative Shapes
         ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
         ctx.beginPath();
-        ctx.arc(900, 150, 200, 0, Math.PI * 2);
+        ctx.arc(950, 100, 250, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.beginPath();
-        ctx.arc(150, 900, 300, 0, Math.PI * 2);
+        ctx.arc(100, 750, 300, 0, Math.PI * 2);
         ctx.fill();
 
         // Text Content
@@ -36,34 +36,24 @@ export default function ShareCard({ score, rank, consecutiveHits }) {
         ctx.shadowColor = 'rgba(0,0,0,0.3)';
 
         // Title
-        ctx.font = 'black 120px Inter, system-ui, sans-serif';
-        ctx.fillText('CALCULUX', 540, 220);
-
-        // Rank Label
-        ctx.font = 'bold 40px Inter, system-ui, sans-serif';
-        ctx.fillStyle = 'rgba(255,255,255,0.8)';
-        ctx.fillText('RANGO ALCANZADO', 540, 400);
-
-        // Rank Value
-        ctx.font = 'black 100px Inter, system-ui, sans-serif';
-        ctx.fillStyle = 'white';
-        ctx.fillText(rank.toUpperCase(), 540, 520);
+        ctx.font = 'black 140px Inter, system-ui, sans-serif';
+        ctx.fillText('CALCULUX', 540, 200);
 
         // Score Label
-        ctx.font = 'bold 40px Inter, system-ui, sans-serif';
+        ctx.font = 'bold 50px Inter, system-ui, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.8)';
-        ctx.fillText('PUNTAJE FINAL', 540, 700);
+        ctx.fillText('PUNTAJE FINAL', 540, 380);
 
         // Score Value
-        ctx.font = 'black 180px Inter, system-ui, sans-serif';
+        ctx.font = 'black 220px Inter, system-ui, sans-serif';
         ctx.fillStyle = 'white';
-        ctx.fillText(score, 540, 850);
+        ctx.fillText(score, 540, 580);
 
         // Stats
-        ctx.font = 'bold 50px Inter, system-ui, sans-serif';
-        ctx.fillText(`Aciertos seguidos: ${consecutiveHits}`, 540, 980);
+        ctx.font = 'bold 55px Inter, system-ui, sans-serif';
+        ctx.fillText(`Aciertos seguidos: ${consecutiveHits}`, 540, 740);
 
-    }, [score, rank, consecutiveHits]);
+    }, [score, consecutiveHits]);
 
     const handleShare = async () => {
         const canvas = canvasRef.current;
