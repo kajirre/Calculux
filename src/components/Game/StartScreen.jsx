@@ -31,16 +31,16 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
   const selectedLevel = LEVELS.find(l => l.id === level)
 
   return (
-    <div className="space-y-6 animate-in fade-in zoom-in duration-300">
-      <div className="text-center mb-6">
-        <h1 className="text-4xl font-black text-sky-600 tracking-tight">CALCULUX</h1>
-        <p className="text-gray-500 font-medium">Entrena tu mente, domina los números</p>
+    <div className="space-y-4 animate-in fade-in zoom-in duration-300">
+      <div className="text-center mb-2">
+        <h1 className="text-3xl font-black text-sky-600 tracking-tight">CALCULUX</h1>
+        <p className="text-[12px] text-gray-500 font-medium">Entrena tu mente, domina los números</p>
       </div>
 
       {step === 1 ? (
-        <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="text-sm font-bold text-gray-400 uppercase tracking-widest text-center">Selecciona tu Rango</div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="space-y-3 animate-in slide-in-from-bottom-4 duration-500">
+          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Selecciona tu Rango</div>
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {LEVELS.map((l) => (
               <button
                 key={l.id}
@@ -48,47 +48,47 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
                   setLevel(l.id)
                   setStep(2)
                 }}
-                className={`flex flex-col items-center justify-center p-4 sm:p-6 rounded-2xl border-2 transition-all hover:scale-105 active:scale-95 ${l.color} border-transparent shadow-sm hover:shadow-md`}
+                className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border-2 transition-all hover:scale-105 active:scale-95 ${l.color} border-transparent shadow-sm`}
               >
-                <span className="font-bold text-base sm:text-lg">{l.label}</span>
+                <span className="font-bold text-sm sm:text-base">{l.label}</span>
               </button>
             ))}
           </div>
         </div>
       ) : (
-        <div className="space-y-5 sm:space-y-6 animate-in slide-in-from-right-4 duration-500">
+        <div className="space-y-3 animate-in slide-in-from-right-4 duration-500">
           <button
             onClick={() => setStep(1)}
-            className="text-sm font-black text-sky-600 hover:text-sky-700 flex items-center gap-1 uppercase tracking-wider"
+            className="text-[10px] font-black text-sky-600 hover:text-sky-700 flex items-center gap-1 uppercase tracking-wider mb-2"
           >
             ← Volver
           </button>
 
-          <div className={`p-4 rounded-2xl border-2 flex items-center justify-between shadow-sm ${selectedLevel.color}`}>
-            <div className="flex items-center gap-3">
+          <div className={`p-3 rounded-xl border-2 flex items-center justify-between shadow-sm ${selectedLevel.color}`}>
+            <div className="flex items-center gap-2">
               <div>
                 <div className="text-[10px] font-black uppercase opacity-60 tracking-wider">Modo</div>
-                <div className="font-black text-xl leading-none">{selectedLevel.label}</div>
+                <div className="font-black text-lg leading-none">{selectedLevel.label}</div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
             <div>
-              <div className="font-black text-gray-700 uppercase text-xs tracking-wider">Muerte Súbita</div>
-              <div className="text-[10px] text-gray-400 uppercase font-bold tracking-tighter">Infinito + Velocidad</div>
+              <div className="font-black text-gray-700 uppercase text-[10px] tracking-wider">Muerte Súbita</div>
+              <div className="text-[9px] text-gray-400 uppercase font-bold tracking-tighter">Infinito + Velocidad</div>
             </div>
             <button
               onClick={() => setIsSuddenDeath(!isSuddenDeath)}
-              className={`w-12 h-7 rounded-full transition-all relative ${isSuddenDeath ? 'bg-rose-500' : 'bg-gray-200'}`}
+              className={`w-10 h-6 rounded-full transition-all relative ${isSuddenDeath ? 'bg-rose-500' : 'bg-gray-200'}`}
             >
-              <div className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-sm transition-all ${isSuddenDeath ? 'right-0.5' : 'left-0.5'}`} />
+              <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-all ${isSuddenDeath ? 'right-0.5' : 'left-0.5'}`} />
             </button>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Operaciones</div>
-            <div className="flex gap-2 sm:gap-3">
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Operaciones</div>
+            <div className="flex gap-2">
               {[
                 { id: '+', label: 'Suma', icon: '+' },
                 { id: '-', label: 'Resta', icon: '−' },
@@ -98,27 +98,27 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
                 <button
                   key={op.id}
                   onClick={() => toggleOp(op.id)}
-                  className={`flex-1 py-4 rounded-xl border-2 font-black transition-all ${operators.includes(op.id) ? 'border-sky-500 bg-sky-50 text-sky-700 scale-105 shadow-md shadow-sky-100' : 'border-gray-50 text-gray-300 hover:border-gray-100'}`}
+                  className={`flex-1 py-3 rounded-lg border-2 font-black transition-all ${operators.includes(op.id) ? 'border-sky-500 bg-sky-50 text-sky-700 shadow-sm shadow-sky-100' : 'border-gray-50 text-gray-300 hover:border-gray-100'}`}
                 >
-                  <div className="text-2xl">{op.icon}</div>
+                  <div className="text-xl">{op.icon}</div>
                 </button>
               ))}
             </div>
           </div>
 
           {!isSuddenDeath && (
-            <div className="flex items-end justify-between gap-4 animate-in fade-in duration-300">
+            <div className="flex items-end justify-between gap-4 animate-in fade-in duration-300 px-1">
               <div className="flex-1">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Ejercicios</label>
-                <div className="flex items-center bg-gray-50 rounded-2xl px-2">
-                  <button onClick={() => setTotal(Math.max(5, total - 5))} className="p-3 text-gray-400 font-black text-lg">-</button>
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Ejercicios</label>
+                <div className="flex items-center bg-gray-50 rounded-xl px-1">
+                  <button onClick={() => setTotal(Math.max(5, total - 5))} className="p-2 text-gray-400 font-black">-</button>
                   <input
                     type="number"
                     value={total}
                     readOnly
-                    className="w-full bg-transparent border-none text-center font-black text-gray-700 py-3 text-lg"
+                    className="w-full bg-transparent border-none text-center font-black text-gray-700 py-2 text-base"
                   />
-                  <button onClick={() => setTotal(Math.min(50, total + 5))} className="p-3 text-gray-400 font-black text-lg">+</button>
+                  <button onClick={() => setTotal(Math.min(50, total + 5))} className="p-2 text-gray-400 font-black">+</button>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
 
           <button
             onClick={handleStart}
-            className={`w-full py-5 rounded-2xl font-black text-xl shadow-xl transition-all hover:scale-[1.02] active:scale-95 ${isSuddenDeath ? 'bg-rose-600 text-white shadow-rose-200' : 'bg-sky-600 text-white shadow-sky-200'}`}
+            className={`w-full py-4 rounded-xl font-black text-lg shadow-lg transition-all active:scale-95 ${isSuddenDeath ? 'bg-rose-600 text-white shadow-rose-200' : 'bg-sky-600 text-white shadow-sky-200'}`}
           >
             {isSuddenDeath ? 'INICIAR RETO' : '¡EMPEZAR!'}
           </button>
