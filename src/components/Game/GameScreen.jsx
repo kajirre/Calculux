@@ -17,7 +17,8 @@ export default function GameScreen({
   score,
   level = 1,
   feedback,
-  settings = {}
+  settings = {},
+  onQuit
 }) {
   const [answer, setAnswer] = useState('')
   const inputRef = useRef(null)
@@ -88,35 +89,45 @@ export default function GameScreen({
   const isSuddenDeath = settings.isSuddenDeath
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center px-2">
-        <div>
-          <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-            {isSuddenDeath ? 'Racha Actual' : 'Ejercicio'}
+    <div className="space-y-3 sm:space-y-4">
+      <div className="flex justify-between items-start px-1">
+        <button
+          onClick={onQuit}
+          className="text-[10px] font-black text-sky-600 uppercase tracking-widest bg-sky-50 px-3 py-1.5 rounded-lg active:scale-95 transition-all"
+        >
+          ← Volver
+        </button>
+        <div className="flex gap-4 sm:gap-6">
+          <div className="text-right">
+            <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">
+              {isSuddenDeath ? 'Racha' : 'Ejerc.'}
+            </div>
+            <div className="text-base sm:text-xl font-black text-gray-700 leading-none">
+              {isSuddenDeath ? (settings.consecutiveHits ?? 0) : `${index + 1}/${total}`}
+            </div>
           </div>
-          <div className="text-xl font-black text-gray-700">
-            {isSuddenDeath ? (settings.consecutiveHits ?? 0) : `${index + 1} / ${total}`}
+          <div className="text-right">
+            <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Puntos</div>
+            <div className="text-base sm:text-xl font-black text-sky-600 tracking-tighter leading-none">{score}</div>
           </div>
-        </div>
-        <div className="text-right">
-          <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Puntaje</div>
-          <div className="text-xl font-black text-sky-600 tracking-tighter">{score}</div>
         </div>
       </div>
 
       <TimerBar pct={pct} color={isSuddenDeath ? 'bg-rose-500' : 'bg-sky-500'} />
 
-      <div className="py-10 min-h-[160px] flex items-center justify-center">
+      <div className="py-2 min-h-[100px] sm:min-h-[140px] flex items-center justify-center">
         {feedback?.type === 'wrong' ? (
           <div className="text-center animate-in zoom-in duration-300">
-            <div className="text-6xl font-black text-rose-600 mb-4 drop-shadow-sm">✕</div>
-            <div className="text-xl font-bold text-gray-500 uppercase tracking-wide mb-1">Resultado Correcto</div>
-            <div className={`font-black text-6xl text-rose-600 ${isSuddenDeath ? 'animate-pulse' : ''}`}>
+            <div className="text-5xl font-black text-rose-600 mb-2 drop-shadow-sm">✕</div>
+            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1">Resultado Correcto</div>
+            <div className={`font-black text-5xl text-rose-600 ${isSuddenDeath ? 'animate-pulse' : ''}`}>
               {feedback.correct}
             </div>
           </div>
         ) : (
-          <ProblemDisplay a={problem.a} b={problem.b} op={problem.op} />
+          <div className="transform scale-90 sm:scale-100">
+            <ProblemDisplay a={problem.a} b={problem.b} op={problem.op} />
+          </div>
         )}
       </div>
 
@@ -132,20 +143,20 @@ export default function GameScreen({
           onClick={() => handleSubmit()}
           variant="primary"
           disabled={pct === 0 || feedback !== null}
-          className={`px-4 sm:px-8 rounded-2xl font-black text-base sm:text-lg ${isSuddenDeath ? 'bg-rose-600 shadow-rose-100 hover:bg-rose-700' : ''}`}
+          className={`px-4 sm:px-8 rounded-2xl font-black text-base sm:text-lg ${isSuddenDeath ? 'bg-rose-600 shadow-rose-100' : 'bg-sky-600 shadow-sky-100'}`}
         >
           OK
         </Button>
       </div>
 
       {supported && !isSuddenDeath && (
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-1">
           <button
             onClick={toggleMic}
             disabled={pct === 0 || feedback !== null}
-            className={`text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-all ${micOn ? 'bg-rose-50 text-rose-600' : 'bg-gray-50 text-gray-400'}`}
+            className={`text-[9px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full transition-all ${micOn ? 'bg-rose-50 text-rose-600' : 'bg-gray-50 text-gray-400'}`}
           >
-            {micOn ? '• MIC Escuchando' : 'Mic: OFF'}
+            {micOn ? '• ESCUCHANDO' : 'Voz: OFF'}
           </button>
         </div>
       )}

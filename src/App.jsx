@@ -30,6 +30,7 @@ function GameContent() {
             score={score}
             feedback={feedback}
             settings={settings}
+            onQuit={restart}
           />
         </>
       ) : (
