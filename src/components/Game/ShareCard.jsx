@@ -90,7 +90,7 @@ export default function ShareCard({ score, rank, consecutiveHits }) {
         <div className="flex flex-col items-center gap-4">
             <canvas
                 ref={canvasRef}
-                className="w-full max-w-[350px] aspect-square rounded-3xl shadow-2xl"
+                className="w-full max-w-[350px] aspect-[1080/850] rounded-3xl shadow-2xl object-contain"
             />
             <button
                 onClick={handleShare}
