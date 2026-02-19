@@ -2,6 +2,7 @@ import React, { createContext, useState, useCallback, useRef } from 'react'
 import { generateProblem } from '../logic/mathEngine'
 import useStreak from '../hooks/useStreak'
 import { calculateRank } from '../utils/rankUtils'
+import { playCorrectSound, playWrongSound, playLevelUpSound } from '../utils/soundUtils'
 
 const GameContext = createContext()
 
@@ -34,6 +35,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
       const newHits = h + 1
       // Dynamic difficulty: Every 5 hits, level + 1 and time -5%
       if (settings.isSuddenDeath && newHits % 5 === 0) {
+        playLevelUpSound()
         setSettings(prev => ({
           ...prev,
           level: prev.level + 1,
@@ -43,6 +45,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
       return newHits
     })
 
+    playCorrectSound()
     updateStreak(true)
     setFeedback({ type: 'correct' })
 
@@ -56,6 +59,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
   }, [index, settings, nextProblem, updateStreak])
 
   const handleWrong = useCallback((correct) => {
+    playWrongSound()
     setFeedback({ type: 'wrong', correct })
 
     const delay = settings.isSuddenDeath ? 4000 : 3000
