@@ -4,25 +4,25 @@ import { motion, AnimatePresence } from 'framer-motion'
 const CIRCLE_EYE = "M -10 0 A 10 10 0 1 1 10 0 A 10 10 0 1 1 -10 0"
 
 const EMOTIONS = {
-    happy: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 44 55 Q 50 62 56 55", strokeWidth: 3 }, lids: { d1: "M 30 40 Q 35 35 40 40", d2: "M 60 40 Q 65 35 70 40", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
-    sad: { eyes: { y: 2, scale: 0.9, pupilSize: 0.7 }, mouth: { d: "M 45 60 Q 50 55 55 60", strokeWidth: 3 }, lids: { d1: "M 30 45 Q 35 48 40 45", d2: "M 60 45 Q 65 48 70 45", opacity: 1 }, color: "#0284c7", scleroticaClip: CIRCLE_EYE },
-    angry: { eyes: { y: 1, scale: 1.1, pupilSize: 0.6 }, mouth: { d: "M 44 58 Q 50 55 56 58", strokeWidth: 3 }, lids: { d1: "M 30 42 Q 35 50 40 50", d2: "M 60 50 Q 65 50 70 42", opacity: 1 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
-    confused: { eyes: { y: -2, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 46 58 Q 50 62 54 54", strokeWidth: 3 }, lids: { d1: "M 28 35 Q 35 38 42 35", d2: "M 58 45 Q 65 42 72 45", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
-    pleased: { eyes: { y: 0, scale: 1.1, pupilSize: 1.2 }, mouth: { d: "M 42 55 Q 50 65 58 55", strokeWidth: 4 }, lids: { d1: "M 30 50 Q 35 45 40 50", d2: "M 60 50 Q 65 45 70 50", opacity: 0 }, color: "#38bdf8", scleroticaClip: CIRCLE_EYE },
-    pain: { eyes: { y: 2, scale: 0.8, pupilSize: 0.5 }, mouth: { d: "M 45 60 Q 50 54 55 60", strokeWidth: 2 }, lids: { d1: "M 30 52 L 40 48", d2: "M 60 48 L 70 52", opacity: 1 }, color: "#1e40af", scleroticaClip: CIRCLE_EYE },
-    scared: { eyes: { y: 0, scale: 1.2, pupilSize: 0.4 }, mouth: { d: "M 45 60 Q 50 52 55 60", strokeWidth: 3 }, lids: { d1: "M 25 35 Q 35 45 45 35", d2: "M 55 35 Q 65 45 75 35", opacity: 0 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
-    serious: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 45 55 Q 50 55 55 55", strokeWidth: 3 }, lids: { d1: "M 30 42 Q 35 42 40 42", d2: "M 60 42 Q 65 42 70 42", opacity: 1 }, color: "#0284c7", scleroticaClip: CIRCLE_EYE },
-    silly: { eyes: { y: -2, scale: 1.1, pupilSize: 1.0 }, mouth: { d: "M 44 55 Q 52 68 58 55", strokeWidth: 3 }, lids: { d1: "M 28 35 Q 35 30 42 40", d2: "M 58 40 Q 65 30 72 35", opacity: 0 }, color: "#38bdf8", scleroticaClip: CIRCLE_EYE },
-    nervous: { eyes: { y: 1, scale: 1, pupilSize: 0.7 }, mouth: { d: "M 45 58 Q 50 54 55 58", strokeWidth: 3 }, lids: { d1: "M 32 42 Q 35 48 38 42", d2: "M 62 42 Q 65 48 68 42", opacity: 0 }, color: "#0369a1", scleroticaClip: CIRCLE_EYE },
-    tired: { eyes: { y: 3, scale: 0.9, pupilSize: 0.7 }, mouth: { d: "M 47 55 Q 50 55 53 55", strokeWidth: 2 }, lids: { d1: "M 25 55 Q 35 55 45 55", d2: "M 55 55 Q 65 55 75 55", opacity: 1 }, color: "#1e3a8a", scleroticaClip: CIRCLE_EYE },
-    shocked: { eyes: { y: -5, scale: 1.3, pupilSize: 0.4 }, mouth: { d: "M 46 54 Q 50 64 54 54", strokeWidth: 4 }, lids: { d1: "M 25 25 Q 35 20 45 25", d2: "M 55 25 Q 65 20 75 25", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
-    irritated: { eyes: { y: 1, scale: 1, pupilSize: 0.7 }, mouth: { d: "M 44 58 Q 50 54 56 58", strokeWidth: 3 }, lids: { d1: "M 30 45 Q 35 48 40 48", d2: "M 60 48 Q 65 48 70 45", opacity: 1 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
-    wtf: { eyes: { y: -2, scale: 1.5, pupilSize: 0.35 }, mouth: { d: "M 44 58 Q 50 50 56 58", strokeWidth: 5 }, lids: { d1: "M 25 20 Q 35 40 45 20", d2: "M 55 20 Q 65 40 75 20", opacity: 0 }, color: "#1e40af", scleroticaClip: CIRCLE_EYE },
-    cool: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 44 55 Q 52 58 58 53", strokeWidth: 4 }, lids: { d1: "M 25 35 Q 35 30 45 35", d2: "M 55 35 Q 65 30 75 35", opacity: 0 }, color: "#0ea5e9", showGlasses: true, scleroticaClip: CIRCLE_EYE },
-    suspicious: { eyes: { y: 2, scale: 1.1, pupilSize: 0.7 }, mouth: { d: "M 45 58 L 55 58", strokeWidth: 3 }, lids: { d1: "M 30 40 L 40 42", d2: "M 60 42 L 70 40", opacity: 0 }, color: "#0ea5e9", scleroticaClip: "M -12 0 Q 0 -8 12 0 Q 0 8 -12 0 Z" },
-    unimpressed: { eyes: { y: 1, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 47 58 Q 50 54 53 58", strokeWidth: 3 }, lids: { d1: "M 28 38 Q 35 35 42 38", d2: "M 58 38 Q 65 35 72 38", opacity: 1 }, color: "#0284c7", scleroticaClip: "M -12 0 L 12 0 Q 12 12 0 12 Q -12 12 -12 0 Z" },
-    stare: { eyes: { y: 0, scale: 0.9, pupilSize: 0.6 }, mouth: { d: "M 48 55 L 52 55", strokeWidth: 2 }, lids: { d1: "M 30 40 L 40 40", d2: "M 60 40 L 70 40", opacity: 1 }, color: "#1e3a8a", scleroticaClip: "M -11 2 L 11 2 L 11 -2 L -11 -2 Z" },
-    panic_expert: { eyes: { y: -2, scale: 1.4, pupilSize: 0.15 }, mouth: { d: "M 42 54 L 58 54 L 58 62 L 42 62 Z", strokeWidth: 2 }, lids: { d1: "M 25 30 Q 35 45 45 30", d2: "M 55 30 Q 65 45 75 30", opacity: 0 }, color: "#e11d48", scleroticaClip: CIRCLE_EYE }
+    happy: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 44 55 Q 50 62 56 55", strokeWidth: 3 }, lids: { d1: "M 25 40 Q 30 35 35 40", d2: "M 65 40 Q 70 35 75 40", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
+    sad: { eyes: { y: 2, scale: 0.9, pupilSize: 0.7 }, mouth: { d: "M 45 60 Q 50 55 55 60", strokeWidth: 3 }, lids: { d1: "M 25 45 Q 30 48 35 45", d2: "M 65 45 Q 70 48 75 45", opacity: 1 }, color: "#0284c7", scleroticaClip: CIRCLE_EYE },
+    angry: { eyes: { y: 1, scale: 1.1, pupilSize: 0.6 }, mouth: { d: "M 44 58 Q 50 55 56 58", strokeWidth: 3 }, lids: { d1: "M 25 42 Q 30 50 35 50", d2: "M 65 50 Q 70 50 75 42", opacity: 1 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
+    confused: { eyes: { y: -2, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 46 58 Q 50 62 54 54", strokeWidth: 3 }, lids: { d1: "M 23 35 Q 30 38 37 35", d2: "M 63 45 Q 70 42 77 45", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
+    pleased: { eyes: { y: 0, scale: 1.1, pupilSize: 1.2 }, mouth: { d: "M 42 55 Q 50 65 58 55", strokeWidth: 4 }, lids: { d1: "M 25 50 Q 30 45 35 50", d2: "M 65 50 Q 70 45 75 50", opacity: 0 }, color: "#38bdf8", scleroticaClip: CIRCLE_EYE },
+    pain: { eyes: { y: 2, scale: 0.8, pupilSize: 0.5 }, mouth: { d: "M 45 60 Q 50 54 55 60", strokeWidth: 2 }, lids: { d1: "M 25 52 L 35 48", d2: "M 65 48 L 75 52", opacity: 1 }, color: "#1e40af", scleroticaClip: CIRCLE_EYE },
+    scared: { eyes: { y: 0, scale: 1.2, pupilSize: 0.4 }, mouth: { d: "M 45 60 Q 50 52 55 60", strokeWidth: 3 }, lids: { d1: "M 20 35 Q 30 45 40 35", d2: "M 60 35 Q 70 45 80 35", opacity: 0 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
+    serious: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 45 55 Q 50 55 55 55", strokeWidth: 3 }, lids: { d1: "M 25 42 Q 30 42 35 42", d2: "M 65 42 Q 70 42 75 42", opacity: 1 }, color: "#0284c7", scleroticaClip: CIRCLE_EYE },
+    silly: { eyes: { y: -2, scale: 1.1, pupilSize: 1.0 }, mouth: { d: "M 44 55 Q 52 68 58 55", strokeWidth: 3 }, lids: { d1: "M 23 35 Q 30 30 37 40", d2: "M 63 40 Q 70 30 77 35", opacity: 0 }, color: "#38bdf8", scleroticaClip: CIRCLE_EYE },
+    nervous: { eyes: { y: 1, scale: 1, pupilSize: 0.7 }, mouth: { d: "M 45 58 Q 50 54 55 58", strokeWidth: 3 }, lids: { d1: "M 27 42 Q 30 48 33 42", d2: "M 67 42 Q 70 48 73 42", opacity: 0 }, color: "#0369a1", scleroticaClip: CIRCLE_EYE },
+    tired: { eyes: { y: 3, scale: 0.9, pupilSize: 0.7 }, mouth: { d: "M 47 55 Q 50 55 53 55", strokeWidth: 2 }, lids: { d1: "M 20 55 Q 30 55 40 55", d2: "M 60 55 Q 70 55 80 55", opacity: 1 }, color: "#1e3a8a", scleroticaClip: CIRCLE_EYE },
+    shocked: { eyes: { y: -5, scale: 1.3, pupilSize: 0.4 }, mouth: { d: "M 46 54 Q 50 64 54 54", strokeWidth: 4 }, lids: { d1: "M 20 25 Q 30 20 40 25", d2: "M 60 25 Q 70 20 80 25", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
+    irritated: { eyes: { y: 1, scale: 1, pupilSize: 0.7 }, mouth: { d: "M 44 58 Q 50 54 56 58", strokeWidth: 3 }, lids: { d1: "M 25 45 Q 30 48 35 48", d2: "M 65 48 Q 70 48 75 45", opacity: 1 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
+    wtf: { eyes: { y: -2, scale: 1.5, pupilSize: 0.35 }, mouth: { d: "M 44 58 Q 50 50 56 58", strokeWidth: 5 }, lids: { d1: "M 20 20 Q 30 40 40 20", d2: "M 60 20 Q 70 40 80 20", opacity: 0 }, color: "#1e40af", scleroticaClip: CIRCLE_EYE },
+    cool: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 44 55 Q 52 58 58 53", strokeWidth: 4 }, lids: { d1: "M 20 35 Q 30 30 40 35", d2: "M 60 35 Q 70 30 80 35", opacity: 0 }, color: "#0ea5e9", showGlasses: true, scleroticaClip: CIRCLE_EYE },
+    suspicious: { eyes: { y: 2, scale: 1.1, pupilSize: 0.7 }, mouth: { d: "M 45 58 L 55 58", strokeWidth: 3 }, lids: { d1: "M 25 40 L 35 42", d2: "M 65 42 L 75 40", opacity: 0 }, color: "#0ea5e9", scleroticaClip: "M -12 0 Q 0 -8 12 0 Q 0 8 -12 0 Z" },
+    unimpressed: { eyes: { y: 1, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 47 58 Q 50 54 53 58", strokeWidth: 3 }, lids: { d1: "M 23 38 Q 30 35 37 38", d2: "M 63 38 Q 70 35 77 38", opacity: 1 }, color: "#0284c7", scleroticaClip: "M -12 0 L 12 0 Q 12 12 0 12 Q -12 12 -12 0 Z" },
+    stare: { eyes: { y: 0, scale: 0.9, pupilSize: 0.6 }, mouth: { d: "M 48 55 L 52 55", strokeWidth: 2 }, lids: { d1: "M 25 40 L 35 40", d2: "M 65 40 L 75 40", opacity: 1 }, color: "#1e3a8a", scleroticaClip: "M -11 2 L 11 2 L 11 -2 L -11 -2 Z" },
+    panic_expert: { eyes: { y: -2, scale: 1.4, pupilSize: 0.15 }, mouth: { d: "M 42 54 L 58 54 L 58 62 L 42 62 Z", strokeWidth: 2 }, lids: { d1: "M 20 30 Q 30 45 40 30", d2: "M 60 30 Q 70 45 80 30", opacity: 0 }, color: "#e11d48", scleroticaClip: CIRCLE_EYE }
 }
 
 function Particle({ delay }) {
@@ -101,7 +101,7 @@ export default function Mascot({ emotion = 'happy', isWaving = false, lookOffset
                     transition={{ type: 'spring', stiffness: 150, damping: 15 }}
                 >
                     {/* Left Eye */}
-                    <g transform="translate(35, 52)">
+                    <g transform="translate(30, 52)">
                         <g clipPath="url(#eyeClip)">
                             <circle r="12" fill="white" />
                             <motion.circle
@@ -117,7 +117,7 @@ export default function Mascot({ emotion = 'happy', isWaving = false, lookOffset
                     </g>
 
                     {/* Right Eye */}
-                    <g transform="translate(65, 52)">
+                    <g transform="translate(70, 52)">
                         <g clipPath="url(#eyeClip)">
                             <circle r="12" fill="white" />
                             <motion.circle

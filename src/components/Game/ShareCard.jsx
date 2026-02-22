@@ -83,8 +83,8 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
             ctx.restore();
         };
 
-        drawEye(35, 52);
-        drawEye(65, 52);
+        drawEye(30, 52);
+        drawEye(70, 52);
 
         // Mouth Logic
         ctx.strokeStyle = 'black';
