@@ -46,12 +46,12 @@ export default function GameScreen({
   }
 
   const MS_BY_LEVEL = {
-    1: 10000,
-    2: 12000,
-    3: 15000,
-    4: 18000,
-    5: 20000,
-    6: 25000
+    1: 20000,
+    2: 22000,
+    3: 25000,
+    4: 30000,
+    5: 35000,
+    6: 45000
   }
 
   const baseMs = (MS_BY_LEVEL[level] || 10000) * (settings.timeMultiplier || 1)
