@@ -95,6 +95,42 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
         ctx.font = 'bold 45px Inter, system-ui, sans-serif';
         ctx.fillText(mascotPhrase, 790, 195);
 
+        // Rank Badge
+        ctx.fillStyle = '#f0f9ff';
+        const badgeWidth = 100;
+        const badgeX = 200 - badgeWidth / 2;
+        ctx.beginPath();
+        ctx.roundRect(badgeX, 295, badgeWidth, 22, 11);
+        ctx.fill();
+        ctx.strokeStyle = '#bae6fd';
+        ctx.stroke();
+
+        ctx.fillStyle = '#0369a1';
+        ctx.font = 'bold 10px Inter, system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText(rank.toUpperCase(), 200, 311);
+
+        // --- FOOTER BRANDING ---
+        // Decorative line
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(50, 340);
+        ctx.lineTo(350, 340);
+        ctx.stroke();
+
+        // App URL
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = 'bold 11px Inter, system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('calculux-zeta.vercel.app', 200, 365);
+
+        // Subtle logo/icon at the very bottom
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.arc(200, 378, 3, 0, Math.PI * 2);
+        ctx.fill();
+
         // Text Content
         ctx.textAlign = 'center';
         ctx.fillStyle = 'white';
@@ -105,7 +141,7 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
         ctx.font = 'black 100px Inter, system-ui, sans-serif';
         ctx.fillText('CALCULUX', 540, 560);
 
-        // stats area
+        // Stats Area
         ctx.font = 'bold 50px Inter, system-ui, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
         ctx.fillText('PUNTAJE FINAL', 540, 680);
@@ -114,8 +150,26 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
         ctx.fillStyle = 'white';
         ctx.fillText(score, 540, 920);
 
-        ctx.font = 'bold 55px Inter, system-ui, sans-serif';
-        ctx.fillText(rank, 540, 980);
+        // --- FOOTER BRANDING ---
+        // Decorative line
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(340, 980);
+        ctx.lineTo(740, 980);
+        ctx.stroke();
+
+        // App URL
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.font = 'bold 32px Inter, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('calculux-zeta.vercel.app', 540, 1030);
+
+        // Small decorative icon
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.arc(540, 1050, 6, 0, Math.PI * 2);
+        ctx.fill();
 
     }, [score, consecutiveHits, mascotPhrase, rank]);
 
