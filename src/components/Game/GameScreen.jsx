@@ -26,10 +26,12 @@ export default function GameScreen({
   const [answer, setAnswer] = useState('')
   const inputRef = useRef(null)
 
-  // Emotion rotation logic
-  const EARLY_EMOTIONS = ['happy', 'pleased', 'serious', 'silly']
-  const MID_EMOTIONS = ['serious', 'thinking', 'nervous', 'confused']
-  const LATE_EMOTIONS = ['scared', 'shocked', 'pain', 'wtf']
+  // Emotion categories for different time phases
+  const PHASE_POOLS = {
+    early: ['happy', 'pleased', 'serious', 'silly'], // 100% - 60%
+    mid: ['serious', 'confused', 'tired', 'irritated'], // 60% - 30%
+    late: ['scared', 'shocked', 'pain', 'wtf', 'nervous'] // 30% - 0%
+  }
 
   const MS_BY_LEVEL = {
     1: 10000,
@@ -40,9 +42,8 @@ export default function GameScreen({
     6: 25000
   }
 
-  // Apply time multiplier from dynamic difficulty
-  const baseMs = MS_BY_LEVEL[level] || 10000
-  const ms = Math.floor(baseMs * (settings.timeMultiplier || 1))
+  const baseMs = (MS_BY_LEVEL[level] || 10000) * (settings.timeMultiplier || 1)
+  const ms = Math.floor(baseMs)
 
   const { pct, reset, stop, start } = useTimer({
     ms,
@@ -52,25 +53,34 @@ export default function GameScreen({
     }
   })
 
-  // Dynamic emotion rotation based on timer
+  // Controlled emotion rotation
+  const lastPhase = useRef(null)
   useEffect(() => {
-    if (feedback !== null) return; // Keep feedback emotion (joy/angry)
+    if (feedback !== null) return
 
-    let timer;
-    const rotateEmotion = () => {
-      let pool = EARLY_EMOTIONS;
-      if (pct < 0.3) pool = LATE_EMOTIONS;
-      else if (pct < 0.6) pool = MID_EMOTIONS;
+    // Determine current phase based on percentage
+    let currentPhase = 'early'
+    if (pct < 0.3) currentPhase = 'late'
+    else if (pct < 0.6) currentPhase = 'mid'
 
-      const randomEmotion = pool[Math.floor(Math.random() * pool.length)];
-      setMascotEmotion(randomEmotion);
+    let rotationTimer
 
-      // Rotate every 2-3 seconds
-      timer = setTimeout(rotateEmotion, 2000 + Math.random() * 1000);
-    };
+    const rotate = () => {
+      const pool = PHASE_POOLS[currentPhase]
+      const randomEmotion = pool[Math.floor(Math.random() * pool.length)]
+      setMascotEmotion(randomEmotion)
 
-    rotateEmotion();
-    return () => clearTimeout(timer);
+      // Rotate every 3 seconds for a smoother flow
+      rotationTimer = setTimeout(rotate, 3000)
+    }
+
+    // Only restart rotation logic if phase changes or on initial load
+    if (lastPhase.current !== currentPhase) {
+      lastPhase.current = currentPhase
+      rotate()
+    }
+
+    return () => clearTimeout(rotationTimer)
   }, [pct, feedback, setMascotEmotion])
 
   const { active: micOn, start: startMic, stop: stopMic, supported } = useSpeech({
@@ -90,8 +100,8 @@ export default function GameScreen({
     setAnswer('')
     if (feedback === null) {
       reset()
-      // Initial state for new problem
       setMascotEmotion('serious')
+      lastPhase.current = 'early'
     }
     inputRef.current?.focus()
   }, [problem, reset, feedback, setMascotEmotion])
