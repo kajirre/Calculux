@@ -65,7 +65,7 @@ function GameContent() {
 
   React.useEffect(() => {
     if (!started) {
-      setMascotEmotion('friendly')
+      setMascotEmotion('happy')
     }
   }, [started, setMascotEmotion])
 

@@ -21,7 +21,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
     timeMultiplier: 1.0
   })
   const [consecutiveHits, setConsecutiveHits] = useState(0)
-  const [mascotEmotion, setMascotEmotion] = useState('friendly')
+  const [mascotEmotion, setMascotEmotion] = useState('happy')
   const [mascotLook, setMascotLook] = useState({ x: 0, y: 0 })
   const { streak, updateStreak } = useStreak()
 
