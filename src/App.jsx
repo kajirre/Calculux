@@ -34,28 +34,33 @@ function GameContent() {
   }, [started])
 
   const DARK_COMMENTS = [
-    "Tu cerebro es un error de sistema.",
-    "¿Seguro que pasaste primaria?",
-    "Mi abuela cuenta más rápido. Y está muerta.",
-    "Incluso mi código tiene más lógica que tú.",
-    "Otro fallo y borro tu historial.",
-    "¿Cansado de pensar? Se nota.",
-    "Tus neuronas están en huelga.",
-    "No te culpo, la evolución toma tiempo.",
-    "Si fueras una calculadora, te faltarían pilas.",
-    "¿Necesitas un ábaco? O un tutor.",
-    "Fascinante... lo lento que respondes.",
-    "¿Ese fue tu mejor esfuerzo? Qué triste."
+    "¡Error de sistema!",
+    "¿Pasaste primaria?",
+    "¡Qué lento!",
+    "Mi código es mejor.",
+    "¡Fallo total!",
+    "¿Cansado ya?",
+    "Neuronas off.",
+    "¡Evoluciona!",
+    "¡Sin pilas!",
+    "Cero lógica.",
+    "¿Eso es todo?",
+    "¡Qué triste!"
   ]
 
-  // Show dark humor comments on error
+  // Show dark humor comments on error - FIXED logic
   React.useEffect(() => {
+    let timer;
     if (started && mascotEmotion === 'angry') {
       const randomMsg = DARK_COMMENTS[Math.floor(Math.random() * DARK_COMMENTS.length)]
       setComment(randomMsg)
-      const timer = setTimeout(() => setComment(null), 4000)
-      return () => clearTimeout(timer)
+      timer = setTimeout(() => {
+        setComment(null)
+      }, 1800) // Brief and quick
+    } else if (mascotEmotion !== 'angry') {
+      setComment(null)
     }
+    return () => clearTimeout(timer)
   }, [mascotEmotion, started])
 
   React.useEffect(() => {
