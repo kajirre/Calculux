@@ -35,7 +35,7 @@ function Particle({ delay }) {
     )
 }
 
-export default function Mascot({ emotion = 'happy', isWaving = false }) {
+export default function Mascot({ emotion = 'happy', isWaving = false, lookOffset = { x: 0, y: 0 } }) {
     const config = EMOTIONS[emotion] || EMOTIONS.happy
 
     const variants = {
@@ -79,7 +79,15 @@ export default function Mascot({ emotion = 'happy', isWaving = false }) {
                     <motion.path animate={{ d: config.lids.d1 }} stroke="black" strokeWidth="2.5" fill="none" strokeLinecap="round" />
                     <motion.path animate={{ d: config.lids.d2 }} stroke="black" strokeWidth="2.5" fill="none" strokeLinecap="round" />
                 </motion.g>
-                <motion.g animate={config.eyes} transition={{ duration: 0.2 }}>
+                {/* Eyes with lookOffset support */}
+                <motion.g
+                    animate={{
+                        y: config.eyes.y + lookOffset.y,
+                        x: lookOffset.x,
+                        scale: config.eyes.scale
+                    }}
+                    transition={{ type: 'spring', stiffness: 150, damping: 15 }}
+                >
                     <circle cx="35" cy="52" r="6" fill="black" />
                     <circle cx="65" cy="52" r="6" fill="black" />
                     <circle cx="37" cy="50" r="2" fill="white" opacity="0.5" />

@@ -69,6 +69,33 @@ function GameContent() {
     }
   }, [started, setMascotEmotion])
 
+  const [lookOffset, setLookOffset] = React.useState({ x: 0, y: 0 })
+
+  // "Look at timer" behavior
+  React.useEffect(() => {
+    if (!running) {
+      setLookOffset({ x: 0, y: 0 })
+      return
+    }
+
+    const triggerLook = () => {
+      // Look down at the bar
+      setLookOffset({ x: 0, y: 6 })
+
+      // Look back after 1.2 seconds
+      setTimeout(() => {
+        setLookOffset({ x: 0, y: 0 })
+      }, 1200)
+
+      // Schedule next look in 5-8 seconds
+      const nextTime = 5000 + Math.random() * 3000
+      lookTimer = setTimeout(triggerLook, nextTime)
+    }
+
+    let lookTimer = setTimeout(triggerLook, 3000)
+    return () => clearTimeout(lookTimer)
+  }, [running])
+
   return (
     <Container compact={started}>
       <div className="flex flex-col items-center">
@@ -103,7 +130,7 @@ function GameContent() {
             </AnimatePresence>
             {/* Show mascot in header only during start and combat, not in results */}
             {(!started || running) && (
-              <Mascot emotion={mascotEmotion} isWaving={initialWave} />
+              <Mascot emotion={mascotEmotion} isWaving={initialWave} lookOffset={lookOffset} />
             )}
           </div>
 
