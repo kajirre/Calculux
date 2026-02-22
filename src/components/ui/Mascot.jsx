@@ -74,7 +74,7 @@ export default function Mascot({ emotion = 'friendly' }) {
     return (
         <motion.div
             animate={currentAnimate}
-            className="relative w-20 h-20 sm:w-28 sm:h-28 drop-shadow-2xl"
+            className="relative w-24 h-24 sm:w-32 sm:h-32 drop-shadow-2xl"
         >
             <svg viewBox="0 0 100 100" className="w-full h-full">
                 {/* Body Shape (Flame-like) */}

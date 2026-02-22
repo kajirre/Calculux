@@ -33,11 +33,6 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
 
   return (
     <div className="space-y-4 animate-in fade-in zoom-in duration-300">
-      <div className="text-center mb-2">
-        <h1 className="text-3xl font-black text-sky-600 tracking-tight">CALCULUX</h1>
-        <p className="text-[12px] text-gray-500 font-medium">Entrena tu mente, domina los números</p>
-      </div>
-
       {step === 1 ? (
         <div className="space-y-3 animate-in slide-in-from-bottom-4 duration-500">
           <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Selecciona tu Rango</div>
