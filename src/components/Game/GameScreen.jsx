@@ -41,8 +41,8 @@ export default function GameScreen({
   // Emotion categories for different time phases
   const PHASE_POOLS = {
     early: ['happy', 'pleased', 'serious', 'silly', 'suspicious'], // 100% - 60%
-    mid: ['serious', 'confused', 'tired', 'irritated', 'suspicious'], // 60% - 30%
-    late: ['scared', 'shocked', 'pain', 'wtf', 'nervous'] // 30% - 0%
+    mid: ['serious', 'confused', 'tired', 'irritated', 'suspicious', 'unimpressed'], // 60% - 30%
+    late: ['scared', 'shocked', 'pain', 'wtf', 'nervous', 'stare'] // 30% - 0%
   }
 
   const MS_BY_LEVEL = {
