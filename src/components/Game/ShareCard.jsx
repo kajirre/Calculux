@@ -91,21 +91,21 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.beginPath();
+        const mYCent = 56; // Centered between eyes
         if (mascotEmotion === 'happy' || mascotEmotion === 'pleased' || mascotEmotion === 'silly') {
-            ctx.arc(50, 65, 12, 0.1 * Math.PI, 0.9 * Math.PI);
+            ctx.arc(50, mYCent, 8, 0.1 * Math.PI, 0.9 * Math.PI);
         } else if (mascotEmotion === 'shocked' || mascotEmotion === 'wtf') {
-            ctx.ellipse(50, 75, 5, 10, 0, 0, Math.PI * 2);
+            ctx.ellipse(50, mYCent, 3, 6, 0, 0, Math.PI * 2);
         } else if (mascotEmotion === 'panic_expert') {
             ctx.fillStyle = 'white';
-            ctx.rect(38, 70, 24, 10);
+            ctx.rect(42, mYCent - 4, 16, 8);
             ctx.fill();
-            ctx.strokeRect(38, 70, 24, 10);
-            // teeth lines
-            for (let i = 43; i < 60; i += 5) {
-                ctx.moveTo(i, 70); ctx.lineTo(i, 80);
+            ctx.strokeRect(42, mYCent - 4, 16, 8);
+            for (let i = 46; i < 58; i += 4) {
+                ctx.moveTo(i, mYCent - 4); ctx.lineTo(i, mYCent + 4);
             }
         } else {
-            ctx.moveTo(40, 72); ctx.lineTo(60, 72);
+            ctx.moveTo(45, mYCent); ctx.lineTo(55, mYCent);
         }
         ctx.stroke();
         ctx.restore();
