@@ -57,7 +57,7 @@ export default function GameScreen({
   const baseMs = (MS_BY_LEVEL[level] || 10000) * (settings.timeMultiplier || 1)
   const ms = Math.floor(baseMs)
 
-  const { pct, reset, stop, start } = useTimer({
+  const { timeLeft, pct, reset, stop, start } = useTimer({
     ms,
     onExpire: () => {
       stop()
@@ -70,6 +70,13 @@ export default function GameScreen({
 
   useEffect(() => {
     if (feedback !== null) return
+
+    // Special case: Expert Panic at 2 seconds
+    if (timeLeft < 2000 && timeLeft > 0) {
+      setMascotEmotion('panic_expert')
+      setMascotLook({ x: 0, y: 0 })
+      return
+    }
 
     // 1. Emotion logic
     let currentPhase = 'early'

@@ -21,7 +21,8 @@ const EMOTIONS = {
     cool: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 38 65 Q 55 70 65 62", strokeWidth: 4 }, lids: { d1: "M 25 35 Q 35 30 45 35", d2: "M 55 35 Q 65 30 75 35", opacity: 0 }, color: "#0ea5e9", showGlasses: true, scleroticaClip: CIRCLE_EYE },
     suspicious: { eyes: { y: 2, scale: 1.1, pupilSize: 0.7 }, mouth: { d: "M 42 70 L 58 70", strokeWidth: 3 }, lids: { d1: "M 30 40 L 40 42", d2: "M 60 42 L 70 40", opacity: 0 }, color: "#0ea5e9", scleroticaClip: "M -12 0 Q 0 -8 12 0 Q 0 8 -12 0 Z" },
     unimpressed: { eyes: { y: 1, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 46 72 Q 50 68 54 72", strokeWidth: 3 }, lids: { d1: "M 28 38 Q 35 35 42 38", d2: "M 58 38 Q 65 35 72 38", opacity: 1 }, color: "#0284c7", scleroticaClip: "M -12 0 L 12 0 Q 12 12 0 12 Q -12 12 -12 0 Z" },
-    stare: { eyes: { y: 0, scale: 0.9, pupilSize: 0.6 }, mouth: { d: "M 48 70 L 52 70", strokeWidth: 2 }, lids: { d1: "M 30 40 L 40 40", d2: "M 60 40 L 70 40", opacity: 1 }, color: "#1e3a8a", scleroticaClip: "M -11 2 L 11 2 L 11 -2 L -11 -2 Z" }
+    stare: { eyes: { y: 0, scale: 0.9, pupilSize: 0.6 }, mouth: { d: "M 48 70 L 52 70", strokeWidth: 2 }, lids: { d1: "M 30 40 L 40 40", d2: "M 60 40 L 70 40", opacity: 1 }, color: "#1e3a8a", scleroticaClip: "M -11 2 L 11 2 L 11 -2 L -11 -2 Z" },
+    panic_expert: { eyes: { y: -2, scale: 1.4, pupilSize: 0.15 }, mouth: { d: "M 38 70 L 62 70 L 62 80 L 38 80 Z", strokeWidth: 2 }, lids: { d1: "M 25 30 Q 35 45 45 30", d2: "M 55 30 Q 65 45 75 30", opacity: 0 }, color: "#e11d48", scleroticaClip: CIRCLE_EYE }
 }
 
 function Particle({ delay }) {
@@ -49,7 +50,8 @@ export default function Mascot({ emotion = 'happy', isWaving = false, lookOffset
         shocked: { scale: [1, 1.2, 1], transition: { duration: 0.2 } },
         pain: { x: [-2, 2, -2, 2, 0], transition: { duration: 0.1, repeat: 5 } },
         wtf: { rotate: [-5, 5, -5, 5, 0], scale: [1, 1.3, 1], transition: { duration: 0.3 } },
-        stressed: { x: [-1.5, 1.5, -1.5, 1.5, 0], transition: { duration: 0.08, repeat: Infinity } }
+        stressed: { x: [-1.5, 1.5, -1.5, 1.5, 0], transition: { duration: 0.08, repeat: Infinity } },
+        panic_expert: { x: [-2, 2, -2, 2, 0], y: [-1, 1, -1, 1, 0], transition: { duration: 0.05, repeat: Infinity } }
     }
 
     const currentAnimate = variants[emotion] || variants.happy
@@ -59,7 +61,7 @@ export default function Mascot({ emotion = 'happy', isWaving = false, lookOffset
             animate={currentAnimate}
             className={`relative w-16 h-16 sm:w-20 sm:h-20 transition-all duration-500`}
         >
-            {(emotion === 'shocked' || emotion === 'wtf' || emotion === 'joy') && (
+            {(emotion === 'shocked' || emotion === 'wtf' || emotion === 'joy' || emotion === 'panic_expert') && (
                 <>
                     <Particle delay={0} />
                     <Particle delay={0.4} />
@@ -145,11 +147,22 @@ export default function Mascot({ emotion = 'happy', isWaving = false, lookOffset
                         </motion.g>
                     )}
                 </AnimatePresence>
-                <motion.path
-                    animate={{ d: config.mouth.d, strokeWidth: config.mouth.strokeWidth, stroke: "black" }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                    fill="none" strokeLinecap="round"
-                />
+
+                {/* Mouth with special teeth logic for expert panic */}
+                <g>
+                    <motion.path
+                        animate={{ d: config.mouth.d, strokeWidth: config.mouth.strokeWidth, stroke: "black" }}
+                        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                        fill={emotion === 'panic_expert' ? "white" : "none"} strokeLinecap="round"
+                    />
+                    {emotion === 'panic_expert' && (
+                        <>
+                            <line x1="45" y1="70" x2="45" y2="80" stroke="black" strokeWidth="1" />
+                            <line x1="50" y1="70" x2="50" y2="80" stroke="black" strokeWidth="1" />
+                            <line x1="55" y1="70" x2="55" y2="80" stroke="black" strokeWidth="1" />
+                        </>
+                    )}
+                </g>
             </svg>
 
             <motion.div
