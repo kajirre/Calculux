@@ -21,9 +21,13 @@ export default function SessionEnd({ score, streak, onRestart, onQuickRestart })
       phrase: "¿Es tu límite?",
       emotion: "silly"
     }
+    if (score >= 100) return {
+      phrase: "Meh... puedes más.",
+      emotion: "unimpressed"
+    }
     return {
-      phrase: "Vuelve a primaria...",
-      emotion: "angry"
+      phrase: "¿En serio? Patético.",
+      emotion: "stare"
     }
   }, [score])
 
