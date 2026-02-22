@@ -17,13 +17,19 @@ function GameContent() {
 
   const [comment, setComment] = React.useState(null)
   const [initialWave, setInitialWave] = React.useState(false)
+  const [showGreeting, setShowGreeting] = React.useState(false)
 
   // Initial wave effect
   React.useEffect(() => {
     if (!started) {
       setInitialWave(true)
-      const timer = setTimeout(() => setInitialWave(false), 3000)
-      return () => clearTimeout(timer)
+      setShowGreeting(true)
+      const waveTimer = setTimeout(() => setInitialWave(false), 3000)
+      const greetTimer = setTimeout(() => setShowGreeting(false), 2500)
+      return () => {
+        clearTimeout(waveTimer)
+        clearTimeout(greetTimer)
+      }
     }
   }, [started])
 
@@ -59,15 +65,26 @@ function GameContent() {
   }, [started, setMascotEmotion])
 
   return (
-    <Container>
+    <Container compact={started}>
       <div className="flex flex-col items-center">
         {/* Header with Logo and Mascot */}
-        <div className="text-center mb-6 flex flex-col items-center w-full">
-          <h1 className="text-4xl sm:text-5xl font-black text-sky-600 tracking-tight leading-none mb-2">CALCULUX</h1>
+        <div className={`text-center flex flex-col items-center w-full transition-all duration-500 ${!started ? 'mb-6' : 'mb-2'}`}>
+          <AnimatePresence>
+            {!started && (
+              <motion.h1
+                initial={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20, height: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-4xl sm:text-5xl font-black text-sky-600 tracking-tight leading-none mb-2 overflow-hidden"
+              >
+                CALCULUX
+              </motion.h1>
+            )}
+          </AnimatePresence>
 
           <div className="relative h-20 flex items-center justify-center -my-2">
             <AnimatePresence>
-              {(!started || comment) && (
+              {((!started && showGreeting) || comment) && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -79,12 +96,24 @@ function GameContent() {
                 </motion.div>
               )}
             </AnimatePresence>
-            <Mascot emotion={mascotEmotion} isWaving={initialWave} />
+            {/* Show mascot in header only during start and combat, not in results */}
+            {(!started || running) && (
+              <Mascot emotion={mascotEmotion} isWaving={initialWave} />
+            )}
           </div>
 
-          <p className="text-[12px] sm:text-sm text-gray-400 font-bold uppercase tracking-widest mt-1">
-            {!started ? "Entrena tu mente" : running ? "En Combate" : "Resultados"}
-          </p>
+          <AnimatePresence>
+            {!started && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-[12px] sm:text-sm text-gray-400 font-bold uppercase tracking-widest mt-1"
+              >
+                Entrena tu mente
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="w-full">
