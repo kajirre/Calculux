@@ -39,7 +39,7 @@ const EMOTIONS = {
     }
 }
 
-export default function Mascot({ emotion = 'friendly' }) {
+export default function Mascot({ emotion = 'friendly', isWaving = false }) {
     const config = EMOTIONS[emotion] || EMOTIONS.friendly
 
     const variants = {
@@ -77,6 +77,22 @@ export default function Mascot({ emotion = 'friendly' }) {
             className="relative w-16 h-16 sm:w-20 sm:h-20 drop-shadow-xl"
         >
             <svg viewBox="0 0 100 100" className="w-full h-full">
+                {/* Arm / Hand */}
+                <motion.path
+                    initial={{ rotate: 0 }}
+                    animate={isWaving ? { rotate: [0, -40, 0, -40, 0] } : { rotate: 0 }}
+                    transition={{ duration: 0.8, repeat: isWaving ? 2 : 0, ease: "easeInOut" }}
+                    d="M 85 70 L 95 45"
+                    stroke={config.color}
+                    strokeWidth="10"
+                    strokeLinecap="round"
+                    style={{
+                        originX: "85%",
+                        originY: "70%",
+                        opacity: isWaving ? 1 : 0
+                    }}
+                />
+
                 {/* Body Shape (Flame-like) */}
                 <motion.path
                     animate={{ fill: config.color }}

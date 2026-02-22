@@ -16,6 +16,16 @@ function GameContent() {
   }
 
   const [comment, setComment] = React.useState(null)
+  const [initialWave, setInitialWave] = React.useState(false)
+
+  // Initial wave effect
+  React.useEffect(() => {
+    if (!started) {
+      setInitialWave(true)
+      const timer = setTimeout(() => setInitialWave(false), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [started])
 
   const DARK_COMMENTS = [
     "Tu cerebro es un error de sistema.",
@@ -64,12 +74,12 @@ function GameContent() {
                   exit={{ opacity: 0, scale: 0.5, y: 10 }}
                   className="absolute -top-12 bg-white px-3 py-1.5 rounded-xl shadow-lg text-[9px] font-black text-sky-600 border-2 border-sky-50 z-20 min-w-[80px] text-center"
                 >
-                  {comment || "¡Hola! ¿Listo?"}
+                  {comment || "¡Holaa!"}
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45 border-r-2 border-b-2 border-sky-50" />
                 </motion.div>
               )}
             </AnimatePresence>
-            <Mascot emotion={mascotEmotion} />
+            <Mascot emotion={mascotEmotion} isWaving={initialWave} />
           </div>
 
           <p className="text-[12px] sm:text-sm text-gray-400 font-bold uppercase tracking-widest mt-1">
