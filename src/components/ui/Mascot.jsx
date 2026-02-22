@@ -5,37 +5,37 @@ const EMOTIONS = {
     friendly: {
         eyes: { y: 0, scale: 1 },
         mouth: { scaleX: 1, y: 0, d: "M 40 65 Q 50 75 60 65" },
-        color: "#f43f5e" // rose-500
+        color: "#0ea5e9" // sky-500
     },
     joy: {
         eyes: { y: -5, scale: 1.2 },
         mouth: { scaleX: 1.5, y: 2, d: "M 35 65 Q 50 85 65 65" },
-        color: "#fb7185" // rose-400
+        color: "#38bdf8" // sky-400
     },
     watching: {
         eyes: { y: 0, scale: 1.1 },
         mouth: { scaleX: 0.5, y: 2, d: "M 45 68 L 55 68" },
-        color: "#f43f5e"
+        color: "#0284c7" // sky-600
     },
     stress: {
         eyes: { y: 2, scale: 0.9 },
         mouth: { scaleX: 0.8, y: 0, d: "M 42 70 Q 50 60 58 70" },
-        color: "#e11d48" // rose-600
+        color: "#0369a1" // sky-700
     },
     angry: {
         eyes: { y: 3, rotate: 15 },
         mouth: { scaleX: 1.2, y: 0, d: "M 40 75 Q 50 65 60 75" },
-        color: "#be123c" // rose-700
+        color: "#1d4ed8" // blue-700
     },
     upset: {
         eyes: { y: 5, scale: 0.8 },
         mouth: { scaleX: 1, y: 2, d: "M 40 75 Q 50 65 60 75" },
-        color: "#9f1239" // rose-800
+        color: "#1e3a8a" // blue-900
     },
     gusto: {
         eyes: { y: -2, scale: 1.1 },
         mouth: { scaleX: 1.2, y: 2, d: "M 38 65 L 62 65" },
-        color: "#f43f5e"
+        color: "#0ea5e9"
     }
 }
 
@@ -74,7 +74,7 @@ export default function Mascot({ emotion = 'friendly' }) {
     return (
         <motion.div
             animate={currentAnimate}
-            className="relative w-24 h-24 sm:w-32 sm:h-32 drop-shadow-2xl"
+            className="relative w-16 h-16 sm:w-20 sm:h-20 drop-shadow-xl"
         >
             <svg viewBox="0 0 100 100" className="w-full h-full">
                 {/* Body Shape (Flame-like) */}
