@@ -1,41 +1,49 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Button from '../ui/Button'
 import ShareCard from './ShareCard'
 import { useGame } from '../../context/GameContext'
-import Mascot from '../ui/Mascot'
 
 export default function SessionEnd({ score, streak, onRestart, onQuickRestart }) {
   const { rank, consecutiveHits } = useGame()
 
-  // Random funny expressions for the final screen
-  const FUNNY_EMOTIONS = ['silly', 'shocked', 'wtf', 'pleased', 'cool', 'happy']
-  const finalEmotion = React.useMemo(() =>
-    FUNNY_EMOTIONS[Math.floor(Math.random() * FUNNY_EMOTIONS.length)],
-    [])
+  // Dynamic feedback based on performance
+  const feedback = useMemo(() => {
+    if (score >= 1000) return {
+      phrase: "¡Nivel fachero, bro!",
+      emotion: "cool"
+    }
+    if (score >= 500) return {
+      phrase: "Nada mal, humano.",
+      emotion: "pleased"
+    }
+    if (score >= 200) return {
+      phrase: "¿Es tu límite?",
+      emotion: "silly"
+    }
+    return {
+      phrase: "Vuelve a primaria...",
+      emotion: "angry"
+    }
+  }, [score])
 
   return (
     <div className="text-center space-y-4 animate-in fade-in zoom-in duration-500 max-w-sm mx-auto">
       <div className="flex flex-col items-center gap-1">
-        <div className="relative mb-3">
-          <Mascot emotion={finalEmotion} />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="absolute -top-6 -right-12 bg-gray-800 text-white px-3 py-1.5 rounded-xl text-[10px] font-black shadow-2xl border border-gray-700 uppercase tracking-tighter"
-          >
-            Misión Finalizada
-          </motion.div>
-        </div>
-
         <div className="inline-flex items-center gap-2 px-3 py-0.5 bg-sky-50 rounded-full border border-sky-100 mb-1">
           <span className="text-[10px] font-black text-sky-600 uppercase tracking-widest">{rank}</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-black text-gray-800 tracking-tight leading-none uppercase">Resultados Totales</h2>
+        <h2 className="text-2xl sm:text-3xl font-black text-gray-800 tracking-tight leading-none uppercase">Estadísticas</h2>
       </div>
 
       <div className="transform hover:scale-[1.01] transition-all duration-300">
-        <ShareCard score={score} rank={rank} consecutiveHits={consecutiveHits} />
+        <ShareCard
+          score={score}
+          rank={rank}
+          consecutiveHits={consecutiveHits}
+          mascotPhrase={feedback.phrase}
+          mascotEmotion={feedback.emotion}
+        />
       </div>
 
       <div className="flex flex-col gap-2.5 pt-1 pb-2">
