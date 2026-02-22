@@ -26,12 +26,6 @@ export default function GameScreen({
   const [answer, setAnswer] = useState('')
   const inputRef = useRef(null)
 
-  useEffect(() => {
-    if (pct < 0.3 && pct > 0 && feedback === null) {
-      setMascotEmotion('stress')
-    }
-  }, [pct, feedback, setMascotEmotion])
-
   const MS_BY_LEVEL = {
     1: 10000,
     2: 12000,
@@ -52,6 +46,12 @@ export default function GameScreen({
       onFail()
     }
   })
+
+  useEffect(() => {
+    if (pct < 0.3 && pct > 0 && feedback === null) {
+      setMascotEmotion('stress')
+    }
+  }, [pct, feedback, setMascotEmotion])
 
   const { active: micOn, start: startMic, stop: stopMic, supported } = useSpeech({
     lang: 'es-ES',

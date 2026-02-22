@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { GameProvider, useGame } from './context/GameContext'
 import Container from './components/Layout/Container'
 import GameScreen from './components/Game/GameScreen'
