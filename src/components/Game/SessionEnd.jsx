@@ -9,16 +9,16 @@ export default function SessionEnd({ score, streak, onRestart, onQuickRestart })
   const { rank, consecutiveHits } = useGame()
 
   return (
-    <div className="text-center space-y-3 animate-in fade-in zoom-in duration-500 max-w-sm mx-auto">
+    <div className="text-center space-y-4 animate-in fade-in zoom-in duration-500 max-w-sm mx-auto">
       <div className="flex flex-col items-center gap-1">
         <div className="relative mb-2">
-          <Mascot emotion="joy" />
+          <Mascot emotion="victory_bro" />
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="absolute -top-4 -right-10 bg-sky-600 text-white px-2.5 py-1 rounded-full text-[9px] font-black shadow-lg"
+            className="absolute -top-8 -right-14 bg-gray-800 text-white px-3 py-1.5 rounded-xl text-[10px] font-black shadow-2xl border border-gray-700"
           >
-            ¡BRUTAL! 🔥
+            ¡NIVEL DIOS! 😎
           </motion.div>
         </div>
 

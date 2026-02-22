@@ -70,9 +70,10 @@ export default function GameScreen({
     setAnswer('')
     if (feedback === null) {
       reset()
+      setMascotEmotion('watching')
     }
     inputRef.current?.focus()
-  }, [problem, reset, feedback])
+  }, [problem, reset, feedback, setMascotEmotion])
 
   const handleSubmit = useCallback((value) => {
     const attempt = value !== undefined ? String(value).trim() : answer.trim()
