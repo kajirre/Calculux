@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 
 const LEVELS = [
   { id: 1, label: 'Novato', color: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
@@ -42,16 +43,18 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
           <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Selecciona tu Rango</div>
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {LEVELS.map((l) => (
-              <button
+              <motion.button
                 key={l.id}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   setLevel(l.id)
                   setStep(2)
                 }}
-                className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border-2 transition-all hover:scale-105 active:scale-95 ${l.color} border-transparent shadow-sm`}
+                className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border-2 transition-all ${l.color} border-transparent shadow-sm`}
               >
                 <span className="font-bold text-sm sm:text-base">{l.label}</span>
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -124,12 +127,14 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
             </div>
           )}
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleStart}
-            className={`w-full py-4 rounded-xl font-black text-lg shadow-lg transition-all active:scale-95 ${isSuddenDeath ? 'bg-rose-600 text-white shadow-rose-200' : 'bg-sky-600 text-white shadow-sky-200'}`}
+            className={`w-full py-4 rounded-xl font-black text-lg shadow-lg transition-all ${isSuddenDeath ? 'bg-rose-600 text-white shadow-rose-200' : 'bg-sky-600 text-white shadow-sky-200'}`}
           >
             {isSuddenDeath ? 'INICIAR RETO' : '¡EMPEZAR!'}
-          </button>
+          </motion.button>
         </div>
       )}
     </div>

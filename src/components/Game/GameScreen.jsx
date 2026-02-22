@@ -5,6 +5,7 @@ import Button from '../ui/Button'
 import ProblemDisplay from '../ui/ProblemDisplay'
 import useTimer from '../../hooks/useTimer'
 import useSpeech from '../../hooks/useSpeech'
+import { motion, AnimatePresence } from 'framer-motion'
 import { validateAnswer } from '../../logic/validators'
 
 export default function GameScreen({
@@ -102,13 +103,25 @@ export default function GameScreen({
             <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">
               {isSuddenDeath ? 'Racha' : 'Ejerc.'}
             </div>
-            <div className="text-base sm:text-xl font-black text-gray-700 leading-none">
+            <motion.div
+              key={isSuddenDeath ? settings.consecutiveHits : index}
+              initial={{ scale: 1.2, color: '#0ea5e9' }}
+              animate={{ scale: 1, color: '#374151' }}
+              className="text-base sm:text-xl font-black text-gray-700 leading-none"
+            >
               {isSuddenDeath ? (settings.consecutiveHits ?? 0) : `${index + 1}/${total}`}
-            </div>
+            </motion.div>
           </div>
           <div className="text-right">
             <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Puntos</div>
-            <div className="text-base sm:text-xl font-black text-sky-600 tracking-tighter leading-none">{score}</div>
+            <motion.div
+              key={score}
+              initial={{ scale: 1.5, color: '#10b981' }}
+              animate={{ scale: 1, color: '#0ea5e9' }}
+              className="text-base sm:text-xl font-black text-sky-600 tracking-tighter leading-none"
+            >
+              {score}
+            </motion.div>
           </div>
         </div>
       </div>
