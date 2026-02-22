@@ -42,18 +42,39 @@ const EMOTIONS = {
 export default function Mascot({ emotion = 'friendly' }) {
     const config = EMOTIONS[emotion] || EMOTIONS.friendly
 
+    const variants = {
+        friendly: {
+            y: [0, -8, 0],
+            scale: [1, 1.02, 1],
+            transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+        },
+        joy: {
+            y: [0, -25, 0],
+            scale: [1, 1.15, 0.95, 1],
+            transition: { duration: 0.4, repeat: 2, ease: "easeOut" }
+        },
+        stress: {
+            x: [-2, 2, -2, 2, 0],
+            y: [0, -2, 0],
+            transition: { duration: 0.1, repeat: Infinity }
+        },
+        angry: {
+            rotate: [-5, 5, -5, 5, 0],
+            scale: [1, 1.1, 1],
+            transition: { duration: 0.2, repeat: 3 }
+        },
+        watching: {
+            y: [0, -4, 0],
+            transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+        }
+    }
+
+    const currentAnimate = variants[emotion] || variants.friendly
+
     return (
         <motion.div
-            animate={{
-                y: [0, -8, 0],
-                scale: [1, 1.02, 1]
-            }}
-            transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-            }}
-            className="relative w-32 h-32 drop-shadow-2xl"
+            animate={currentAnimate}
+            className="relative w-20 h-20 sm:w-28 sm:h-28 drop-shadow-2xl"
         >
             <svg viewBox="0 0 100 100" className="w-full h-full">
                 {/* Body Shape (Flame-like) */}

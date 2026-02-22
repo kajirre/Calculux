@@ -24,15 +24,15 @@ function GameContent() {
   return (
     <Container>
       <div className="relative">
-        {/* Floating Mascot */}
-        <div className="absolute -top-20 -right-4 sm:-right-20 z-10 pointer-events-none flex flex-col items-center">
+        {/* Floating Mascot - Re-positioned to avoid overlap */}
+        <div className="absolute -top-24 -right-2 sm:-top-28 sm:-right-24 z-10 pointer-events-none flex flex-col items-center">
           <AnimatePresence>
             {!started && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.5, y: 10 }}
-                className="bg-white px-4 py-2 rounded-2xl shadow-xl text-xs font-black text-sky-600 mb-2 border-2 border-sky-50 relative"
+                className="bg-white px-3 py-1.5 rounded-xl shadow-lg text-[10px] font-black text-sky-600 mb-1 border-2 border-sky-50 relative"
               >
                 ¡Hola! ¿Listo?
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45 border-r-2 border-b-2 border-sky-50" />
