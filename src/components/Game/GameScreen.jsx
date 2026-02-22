@@ -5,6 +5,7 @@ import Button from '../ui/Button'
 import ProblemDisplay from '../ui/ProblemDisplay'
 import useTimer from '../../hooks/useTimer'
 import useSpeech from '../../hooks/useSpeech'
+import { useGame } from '../../context/GameContext'
 import { motion, AnimatePresence } from 'framer-motion'
 import { validateAnswer } from '../../logic/validators'
 
@@ -21,8 +22,15 @@ export default function GameScreen({
   settings = {},
   onQuit
 }) {
+  const { setMascotEmotion } = useGame()
   const [answer, setAnswer] = useState('')
   const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (pct < 0.3 && pct > 0 && feedback === null) {
+      setMascotEmotion('stress')
+    }
+  }, [pct, feedback, setMascotEmotion])
 
   const MS_BY_LEVEL = {
     1: 10000,

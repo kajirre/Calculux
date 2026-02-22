@@ -21,9 +21,11 @@ export function GameProvider({ children, totalExercises = 10 }) {
     timeMultiplier: 1.0
   })
   const [consecutiveHits, setConsecutiveHits] = useState(0)
+  const [mascotEmotion, setMascotEmotion] = useState('friendly')
   const { streak, updateStreak } = useStreak()
 
   const nextProblem = useCallback(() => {
+    setMascotEmotion('watching')
     setProblem(generateProblem(settings.level, { operators: settings.operators }))
     setIndex(i => i + 1)
     setFeedback(null)
@@ -35,6 +37,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
       const newHits = h + 1
       // Dynamic difficulty: Every 5 hits, level + 1 and time -5%
       if (settings.isSuddenDeath && newHits % 5 === 0) {
+        setMascotEmotion('gusto')
         playLevelUpSound()
         setSettings(prev => ({
           ...prev,
@@ -45,6 +48,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
       return newHits
     })
 
+    setMascotEmotion('joy')
     playCorrectSound()
     updateStreak(true)
     setFeedback({ type: 'correct' })
@@ -59,6 +63,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
   }, [index, settings, nextProblem, updateStreak])
 
   const handleWrong = useCallback((correct) => {
+    setMascotEmotion('angry')
     playWrongSound()
     setFeedback({ type: 'wrong', correct })
 
@@ -126,6 +131,8 @@ export function GameProvider({ children, totalExercises = 10 }) {
       streak,
       settings,
       consecutiveHits,
+      mascotEmotion,
+      setMascotEmotion,
       rank,
       handleCorrect,
       handleWrong,
