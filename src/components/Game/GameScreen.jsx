@@ -26,6 +26,11 @@ export default function GameScreen({
   const [answer, setAnswer] = useState('')
   const inputRef = useRef(null)
 
+  // Emotion rotation logic
+  const EARLY_EMOTIONS = ['happy', 'pleased', 'serious', 'silly']
+  const MID_EMOTIONS = ['serious', 'thinking', 'nervous', 'confused']
+  const LATE_EMOTIONS = ['scared', 'shocked', 'pain', 'wtf']
+
   const MS_BY_LEVEL = {
     1: 10000,
     2: 12000,
@@ -47,10 +52,25 @@ export default function GameScreen({
     }
   })
 
+  // Dynamic emotion rotation based on timer
   useEffect(() => {
-    if (pct < 0.3 && pct > 0 && feedback === null) {
-      setMascotEmotion('stress')
-    }
+    if (feedback !== null) return; // Keep feedback emotion (joy/angry)
+
+    let timer;
+    const rotateEmotion = () => {
+      let pool = EARLY_EMOTIONS;
+      if (pct < 0.3) pool = LATE_EMOTIONS;
+      else if (pct < 0.6) pool = MID_EMOTIONS;
+
+      const randomEmotion = pool[Math.floor(Math.random() * pool.length)];
+      setMascotEmotion(randomEmotion);
+
+      // Rotate every 2-3 seconds
+      timer = setTimeout(rotateEmotion, 2000 + Math.random() * 1000);
+    };
+
+    rotateEmotion();
+    return () => clearTimeout(timer);
   }, [pct, feedback, setMascotEmotion])
 
   const { active: micOn, start: startMic, stop: stopMic, supported } = useSpeech({
@@ -70,7 +90,8 @@ export default function GameScreen({
     setAnswer('')
     if (feedback === null) {
       reset()
-      setMascotEmotion('watching')
+      // Initial state for new problem
+      setMascotEmotion('serious')
     }
     inputRef.current?.focus()
   }, [problem, reset, feedback, setMascotEmotion])
