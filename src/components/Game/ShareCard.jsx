@@ -46,10 +46,23 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
         const flame = new Path2D("M 20 80 Q 10 80 10 70 L 10 40 Q 10 20 30 30 L 50 10 L 70 30 Q 90 20 90 40 L 90 70 Q 90 80 80 80 Z");
         ctx.fill(flame);
 
-        // Eyes
+        // Left Eye (Canvas version)
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(35, 52, 10, 0, Math.PI * 2);
+        ctx.fill();
         ctx.fillStyle = '#1e2937';
         ctx.beginPath();
         ctx.arc(35, 52, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Right Eye (Canvas version)
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(65, 52, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#1e2937';
+        ctx.beginPath();
         ctx.arc(65, 52, 6, 0, Math.PI * 2);
         ctx.fill();
 
