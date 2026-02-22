@@ -11,7 +11,17 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
 
         // Canvas dimensions
         canvas.width = 1080;
-        canvas.height = 1080; // Make it square for better sharing
+        canvas.height = 1080;
+
+        // EMOTIONS COLOR/CONFIG SYNC (Matching Mascot.jsx)
+        const COLORS = {
+            happy: "#0ea5e9", sad: "#0284c7", angry: "#1d4ed8", confused: "#0ea5e9",
+            pleased: "#38bdf8", pain: "#1e40af", scared: "#1d4ed8", serious: "#0284c7",
+            silly: "#38bdf8", nervous: "#0369a1", tired: "#1e3a8a", shocked: "#0ea5e9",
+            irritated: "#1d4ed8", wtf: "#1e40af", cool: "#0ea5e9", suspicious: "#0ea5e9",
+            unimpressed: "#0284c7", stare: "#1e3a8a", panic_expert: "#e11d48"
+        };
+        const mascotColor = COLORS[mascotEmotion] || COLORS.happy;
 
         // Background Gradient
         const grad = ctx.createLinearGradient(0, 0, 0, 1080);
@@ -22,156 +32,147 @@ export default function ShareCard({ score, rank, consecutiveHits, mascotPhrase, 
         ctx.roundRect(0, 0, 1080, 1080, 80);
         ctx.fill();
 
-        // Decorative Shapes
+        // Decorative Circles
         ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
         ctx.beginPath();
         ctx.arc(950, 150, 250, 0, Math.PI * 2);
         ctx.fill();
-
         ctx.beginPath();
         ctx.arc(100, 950, 300, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw Simplified Mascot on Canvas
-        const mX = 540 - 150;
-        const mY = 150;
-        const mScale = 3;
-
+        // --- DRAW MASCOT ---
         ctx.save();
-        ctx.translate(mX, mY);
-        ctx.scale(mScale, mScale);
+        ctx.translate(540 - 250, 100);
+        ctx.scale(5, 5); // Scale for big centered mascot
 
-        // Body (Simplified Flame)
-        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        // Body
+        ctx.fillStyle = mascotColor;
         const flame = new Path2D("M 20 80 Q 10 80 10 70 L 10 40 Q 10 20 30 30 L 50 10 L 70 30 Q 90 20 90 40 L 90 70 Q 90 80 80 80 Z");
         ctx.fill(flame);
+        ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+        ctx.lineWidth = 1;
+        ctx.stroke(flame);
 
-        // Left Eye (Canvas version)
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.arc(35, 52, 10, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#1e2937';
-        ctx.beginPath();
-        ctx.arc(35, 52, 6, 0, Math.PI * 2);
-        ctx.fill();
+        // Eyes Logic
+        const drawEye = (x, y) => {
+            ctx.save();
+            ctx.translate(x, y);
 
-        // Right Eye (Canvas version)
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.arc(65, 52, 10, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#1e2937';
-        ctx.beginPath();
-        ctx.arc(65, 52, 6, 0, Math.PI * 2);
-        ctx.fill();
+            // Sclerotica shape (simplified logic)
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            if (mascotEmotion === 'stare') {
+                ctx.rect(-11, -2, 22, 4);
+            } else if (mascotEmotion === 'suspicious') {
+                ctx.ellipse(0, 0, 12, 8, 0, 0, Math.PI * 2);
+            } else if (mascotEmotion === 'unimpressed') {
+                ctx.arc(0, 0, 12, Math.PI, 0); // half circle top
+            } else {
+                ctx.arc(0, 0, 10, 0, Math.PI * 2);
+            }
+            ctx.fill();
 
-        // Mouth (Smile)
-        ctx.strokeStyle = '#1e2937';
+            // Pupil
+            const pSize = mascotEmotion === 'panic_expert' ? 1.5 : (mascotEmotion === 'shocked' || mascotEmotion === 'wtf' ? 3 : 6);
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(0, 0, pSize, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        };
+
+        drawEye(35, 52);
+        drawEye(65, 52);
+
+        // Mouth Logic
+        ctx.strokeStyle = 'black';
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.arc(50, 65, 12, 0.1 * Math.PI, 0.9 * Math.PI);
+        if (mascotEmotion === 'happy' || mascotEmotion === 'pleased' || mascotEmotion === 'silly') {
+            ctx.arc(50, 65, 12, 0.1 * Math.PI, 0.9 * Math.PI);
+        } else if (mascotEmotion === 'shocked' || mascotEmotion === 'wtf') {
+            ctx.ellipse(50, 75, 5, 10, 0, 0, Math.PI * 2);
+        } else if (mascotEmotion === 'panic_expert') {
+            ctx.fillStyle = 'white';
+            ctx.rect(38, 70, 24, 10);
+            ctx.fill();
+            ctx.strokeRect(38, 70, 24, 10);
+            // teeth lines
+            for (let i = 43; i < 60; i += 5) {
+                ctx.moveTo(i, 70); ctx.lineTo(i, 80);
+            }
+        } else {
+            ctx.moveTo(40, 72); ctx.lineTo(60, 72);
+        }
         ctx.stroke();
-
         ctx.restore();
 
-        // Speech Bubble on Canvas
+        // --- SPEECH BUBBLE ---
         ctx.fillStyle = 'white';
         ctx.beginPath();
-        ctx.roundRect(580, 120, 420, 120, 30);
+        ctx.roundRect(650, 150, 380, 120, 30);
+        ctx.fill();
+        ctx.beginPath(); // Arrow
+        ctx.moveTo(650, 200); ctx.lineTo(620, 215); ctx.lineTo(650, 230);
         ctx.fill();
 
-        // Bubble Triangle
-        ctx.beginPath();
-        ctx.moveTo(580, 180);
-        ctx.lineTo(550, 200);
-        ctx.lineTo(580, 220);
-        ctx.fill();
-
-        // Phrase text
+        ctx.fillStyle = mascotColor;
+        ctx.font = 'bold 36px Inter, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#0ea5e9';
-        ctx.font = 'bold 45px Inter, system-ui, sans-serif';
-        ctx.fillText(mascotPhrase, 790, 195);
+        ctx.fillText(mascotPhrase, 840, 225);
 
-        // Rank Badge
-        ctx.fillStyle = '#f0f9ff';
-        const badgeWidth = 100;
-        const badgeX = 200 - badgeWidth / 2;
+        // --- CONTENT ---
+        ctx.textAlign = 'center';
+        ctx.font = 'bold 60px Inter, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.fillText('RESULTADO', 540, 680);
+
+        ctx.font = 'black 320px Inter, sans-serif';
+        ctx.fillStyle = 'white';
+        ctx.fillText(score, 540, 950);
+
+        ctx.font = 'bold 50px Inter, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.fillText(rank.toUpperCase(), 540, 780);
+
+        // --- STATS BAR (Translucent box like UI) ---
+        const barY = 820;
+        const barH = 140;
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
         ctx.beginPath();
-        ctx.roundRect(badgeX, 295, badgeWidth, 22, 11);
+        ctx.roundRect(100, barY, 880, barH, 30);
         ctx.fill();
-        ctx.strokeStyle = '#bae6fd';
+        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
         ctx.stroke();
 
-        ctx.fillStyle = '#0369a1';
-        ctx.font = 'bold 10px Inter, system-ui';
-        ctx.textAlign = 'center';
-        ctx.fillText(rank.toUpperCase(), 200, 311);
+        // Record Label
+        ctx.textAlign = 'left';
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.font = 'bold 30px Inter, sans-serif';
+        ctx.fillText('RÉCORD', 140, barY + 50);
+        ctx.fillStyle = 'white';
+        ctx.font = 'black 50px Inter, sans-serif';
+        ctx.fillText(`#${consecutiveHits}`, 140, barY + 105);
+
+        // App Label
+        ctx.textAlign = 'right';
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.font = 'bold 30px Inter, sans-serif';
+        ctx.fillText('APP', 940, barY + 50);
+        ctx.fillStyle = 'white';
+        ctx.font = 'black 50px Inter, sans-serif';
+        ctx.fillText('Calculux', 940, barY + 105);
 
         // --- FOOTER BRANDING ---
-        // Decorative line
-        ctx.strokeStyle = '#f1f5f9';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(50, 340);
-        ctx.lineTo(350, 340);
-        ctx.stroke();
-
-        // App URL
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = 'bold 11px Inter, system-ui';
         ctx.textAlign = 'center';
-        ctx.fillText('calculux-zeta.vercel.app', 200, 365);
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.font = 'bold 28px Inter, sans-serif';
+        ctx.fillText('calculux-zeta.vercel.app', 540, 1040);
 
-        // Subtle logo/icon at the very bottom
-        ctx.fillStyle = '#38bdf8';
-        ctx.beginPath();
-        ctx.arc(200, 378, 3, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Text Content
-        ctx.textAlign = 'center';
-        ctx.fillStyle = 'white';
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = 'rgba(0,0,0,0.2)';
-
-        // Title
-        ctx.font = 'black 100px Inter, system-ui, sans-serif';
-        ctx.fillText('CALCULUX', 540, 560);
-
-        // Stats Area
-        ctx.font = 'bold 50px Inter, system-ui, sans-serif';
-        ctx.fillStyle = 'rgba(255,255,255,0.7)';
-        ctx.fillText('PUNTAJE FINAL', 540, 680);
-
-        ctx.font = 'black 280px Inter, system-ui, sans-serif';
-        ctx.fillStyle = 'white';
-        ctx.fillText(score, 540, 920);
-
-        // --- FOOTER BRANDING ---
-        // Decorative line
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(340, 980);
-        ctx.lineTo(740, 980);
-        ctx.stroke();
-
-        // App URL
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.font = 'bold 32px Inter, system-ui, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('calculux-zeta.vercel.app', 540, 1030);
-
-        // Small decorative icon
-        ctx.fillStyle = '#38bdf8';
-        ctx.beginPath();
-        ctx.arc(540, 1050, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-    }, [score, consecutiveHits, mascotPhrase, rank]);
+    }, [score, mascotPhrase, mascotEmotion, rank, consecutiveHits]);
 
     const handleShare = async () => {
         const canvas = canvasRef.current;
