@@ -35,7 +35,6 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
     <div className="space-y-4 animate-in fade-in zoom-in duration-300">
       {step === 1 ? (
         <div className="space-y-3 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">Selecciona tu Rango</div>
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {LEVELS.map((l) => (
               <motion.button
@@ -52,6 +51,7 @@ export default function StartScreen({ onStart, defaultLevel = 1 }) {
               </motion.button>
             ))}
           </div>
+          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center mt-2">Selecciona tu Rango</div>
         </div>
       ) : (
         <div className="space-y-3 animate-in slide-in-from-right-4 duration-500">

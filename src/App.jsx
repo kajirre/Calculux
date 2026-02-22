@@ -53,7 +53,7 @@ function GameContent() {
     if (started && mascotEmotion === 'angry') {
       const randomMsg = DARK_COMMENTS[Math.floor(Math.random() * DARK_COMMENTS.length)]
       setComment(randomMsg)
-      const timer = setTimeout(() => setComment(null), 2500)
+      const timer = setTimeout(() => setComment(null), 4000)
       return () => clearTimeout(timer)
     }
   }, [mascotEmotion, started])

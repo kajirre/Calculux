@@ -169,18 +169,6 @@ export default function GameScreen({
           OK
         </Button>
       </div>
-
-      {supported && !isSuddenDeath && (
-        <div className="flex justify-center pt-1">
-          <button
-            onClick={toggleMic}
-            disabled={pct === 0 || feedback !== null}
-            className={`text-[9px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full transition-all ${micOn ? 'bg-rose-50 text-rose-600' : 'bg-gray-50 text-gray-400'}`}
-          >
-            {micOn ? '• ESCUCHANDO' : 'Voz: OFF'}
-          </button>
-        </div>
-      )}
     </div>
   )
 }
