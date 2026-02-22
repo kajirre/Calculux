@@ -18,7 +18,8 @@ const EMOTIONS = {
     shocked: { eyes: { y: -5, scale: 1.3, pupilSize: 0.4 }, mouth: { d: "M 45 65 Q 50 85 55 65", strokeWidth: 4 }, lids: { d1: "M 25 25 Q 35 20 45 25", d2: "M 55 25 Q 65 20 75 25", opacity: 0 }, color: "#0ea5e9", scleroticaClip: CIRCLE_EYE },
     irritated: { eyes: { y: 1, scale: 1, pupilSize: 0.7 }, mouth: { d: "M 40 70 Q 50 65 60 70", strokeWidth: 3 }, lids: { d1: "M 30 45 Q 35 48 40 48", d2: "M 60 48 Q 65 48 70 45", opacity: 1 }, color: "#1d4ed8", scleroticaClip: CIRCLE_EYE },
     wtf: { eyes: { y: -2, scale: 1.5, pupilSize: 0.35 }, mouth: { d: "M 35 75 Q 50 60 65 75", strokeWidth: 5 }, lids: { d1: "M 25 20 Q 35 40 45 20", d2: "M 55 20 Q 65 40 75 20", opacity: 0 }, color: "#1e40af", scleroticaClip: CIRCLE_EYE },
-    cool: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 38 65 Q 55 70 65 62", strokeWidth: 4 }, lids: { d1: "M 25 35 Q 35 30 45 35", d2: "M 55 35 Q 65 30 75 35", opacity: 0 }, color: "#0ea5e9", showGlasses: true, scleroticaClip: CIRCLE_EYE }
+    cool: { eyes: { y: 0, scale: 1, pupilSize: 0.8 }, mouth: { d: "M 38 65 Q 55 70 65 62", strokeWidth: 4 }, lids: { d1: "M 25 35 Q 35 30 45 35", d2: "M 55 35 Q 65 30 75 35", opacity: 0 }, color: "#0ea5e9", showGlasses: true, scleroticaClip: CIRCLE_EYE },
+    suspicious: { eyes: { y: 2, scale: 1.1, pupilSize: 0.7 }, mouth: { d: "M 42 70 L 58 70", strokeWidth: 3 }, lids: { d1: "M 30 40 L 40 42", d2: "M 60 42 L 70 40", opacity: 0 }, color: "#0ea5e9", scleroticaClip: "M -12 0 Q 0 -8 12 0 Q 0 8 -12 0 Z" }
 }
 
 function Particle({ delay }) {
