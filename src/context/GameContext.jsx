@@ -22,6 +22,7 @@ export function GameProvider({ children, totalExercises = 10 }) {
   })
   const [consecutiveHits, setConsecutiveHits] = useState(0)
   const [mascotEmotion, setMascotEmotion] = useState('friendly')
+  const [mascotLook, setMascotLook] = useState({ x: 0, y: 0 })
   const { streak, updateStreak } = useStreak()
 
   const nextProblem = useCallback(() => {
@@ -133,6 +134,8 @@ export function GameProvider({ children, totalExercises = 10 }) {
       consecutiveHits,
       mascotEmotion,
       setMascotEmotion,
+      mascotLook,
+      setMascotLook,
       rank,
       handleCorrect,
       handleWrong,

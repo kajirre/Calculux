@@ -22,9 +22,21 @@ export default function GameScreen({
   settings = {},
   onQuit
 }) {
-  const { setMascotEmotion } = useGame()
+  const { setMascotEmotion, setMascotLook } = useGame()
   const [answer, setAnswer] = useState('')
   const inputRef = useRef(null)
+
+  // Eye interaction logic
+  const [eyeMode, setEyeMode] = useState('tracking') // 'tracking' | 'hurry'
+
+  // Toggle eye mode every 3.5s
+  useEffect(() => {
+    if (feedback !== null) return
+    const timer = setInterval(() => {
+      setEyeMode(prev => prev === 'tracking' ? 'hurry' : 'tracking')
+    }, 3500)
+    return () => clearInterval(timer)
+  }, [feedback])
 
   // Emotion categories for different time phases
   const PHASE_POOLS = {
@@ -53,35 +65,37 @@ export default function GameScreen({
     }
   })
 
-  // Controlled emotion rotation
+  // Controlled emotion and eye rotation
   const lastPhase = useRef(null)
+
   useEffect(() => {
     if (feedback !== null) return
 
-    // Determine current phase based on percentage
+    // 1. Emotion logic
     let currentPhase = 'early'
     if (pct < 0.3) currentPhase = 'late'
     else if (pct < 0.6) currentPhase = 'mid'
 
-    let rotationTimer
-
-    const rotate = () => {
-      const pool = PHASE_POOLS[currentPhase]
-      const randomEmotion = pool[Math.floor(Math.random() * pool.length)]
-      setMascotEmotion(randomEmotion)
-
-      // Rotate every 3 seconds for a smoother flow
-      rotationTimer = setTimeout(rotate, 3000)
-    }
-
-    // Only restart rotation logic if phase changes or on initial load
     if (lastPhase.current !== currentPhase) {
       lastPhase.current = currentPhase
-      rotate()
+      const pool = PHASE_POOLS[currentPhase]
+      setMascotEmotion(pool[Math.floor(Math.random() * pool.length)])
     }
 
-    return () => clearTimeout(rotationTimer)
-  }, [pct, feedback, setMascotEmotion])
+    // 2. Eye tracking logic
+    if (eyeMode === 'tracking') {
+      // Follow the bar: Map pct (1 -> 0) to X (10 -> -10)
+      const lookX = (pct * 20) - 10
+      setMascotLook({ x: lookX, y: 6 })
+    } else {
+      // Hurry mode: Look at user
+      setMascotLook({ x: 0, y: 0 })
+      // When looking at screen in later phases, force a "hurry" emotion
+      if (pct < 0.4) {
+        setMascotEmotion('shocked')
+      }
+    }
+  }, [pct, feedback, eyeMode, setMascotEmotion, setMascotLook])
 
   const { active: micOn, start: startMic, stop: stopMic, supported } = useSpeech({
     lang: 'es-ES',
@@ -93,18 +107,22 @@ export default function GameScreen({
   useEffect(() => {
     inputRef.current?.focus()
     start()
-    return () => stop()
-  }, [start, stop])
+    return () => {
+      stop()
+      setMascotLook({ x: 0, y: 0 })
+    }
+  }, [start, stop, setMascotLook])
 
   useEffect(() => {
     setAnswer('')
     if (feedback === null) {
       reset()
       setMascotEmotion('serious')
+      setMascotLook({ x: 5, y: 6 }) // Start looking at the bar edge
       lastPhase.current = 'early'
     }
     inputRef.current?.focus()
-  }, [problem, reset, feedback, setMascotEmotion])
+  }, [problem, reset, feedback, setMascotEmotion, setMascotLook])
 
   const handleSubmit = useCallback((value) => {
     const attempt = value !== undefined ? String(value).trim() : answer.trim()
